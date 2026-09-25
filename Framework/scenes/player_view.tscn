@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://d3en6jxphfac4"]
+
+[ext_resource type="Script" uid="uid://bnv1lhsbc4s54" path="res://Framework/scenes/player_view.gd" id="1_udoe4"]
+
+[node name="Player View" type="SubViewportContainer" unique_id=455173109]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+script = ExtResource("1_udoe4")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1616282869]
+handle_input_locally = false
+size = Vector2i(2, 2)
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="SubViewport" unique_id=1977641057]

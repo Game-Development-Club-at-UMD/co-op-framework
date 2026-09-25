@@ -1,0 +1,40 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Co-op Framework"
+config/description="Framework for GDC's co-op game jam."
+run/main_scene="uid://bsket3o1le7p1"
+config/features=PackedStringArray("4.7", "Forward Plus")
+config/icon="uid://dh0ramf8bubv3"
+
+[display]
+
+window/size/mode=3
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[file_customization]
+
+folder_colors={
+"res://Example Game/": "red",
+"res://Framework/": "gray",
+"res://YOUR GAME/": "green"
+}
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

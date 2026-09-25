@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://bsket3o1le7p1"]
+
+[ext_resource type="Script" uid="uid://cswojpfuuv2a1" path="res://Framework/scenes/framework_control.gd" id="1_y8o0t"]
+[ext_resource type="PackedScene" uid="uid://tbq21h2pw7k5" path="res://Example Game/scenes/example_game.tscn" id="2_tvgun"]
+[ext_resource type="PackedScene" uid="uid://d3en6jxphfac4" path="res://Framework/scenes/player_view.tscn" id="3_3tjwf"]
+
+[node name="Framework Control" type="Control" unique_id=186729224]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y8o0t")
+game = ExtResource("2_tvgun")
+
+[node name="GridContainer" type="GridContainer" parent="." unique_id=802773407]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+
+[node name="Player View P1" parent="GridContainer" unique_id=455173109 instance=ExtResource("3_3tjwf")]
+layout_mode = 2
+
+[node name="Player View P2" parent="GridContainer" unique_id=477314717 instance=ExtResource("3_3tjwf")]
+layout_mode = 2
+
+[node name="Player View P3" parent="GridContainer" unique_id=1523745474 instance=ExtResource("3_3tjwf")]
+layout_mode = 2
+
+[node name="Player View P4" parent="GridContainer" unique_id=1314936421 instance=ExtResource("3_3tjwf")]
+layout_mode = 2
+
+[node name="Test Timer" type="Timer" parent="." unique_id=1098056614]
+wait_time = 3.0
+autostart = true
+
+[connection signal="timeout" from="Test Timer" to="." method="_on_timer_timeout"]

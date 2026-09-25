@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://tbq21h2pw7k5"]
+
+[ext_resource type="Texture2D" uid="uid://c6df44tthmwdi" path="res://Example Game/assets/IMG_0618.jpeg" id="1_pag7w"]
+
+[node name="Example Game" type="Node2D" unique_id=629457840]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1576830577]
+rotation = 3.1415927
+texture = ExtResource("1_pag7w")
