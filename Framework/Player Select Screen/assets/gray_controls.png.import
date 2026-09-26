@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdlp1tbhpf53p"
-path="res://.godot/imported/p4_controls.png-ab8f3fe2bb486473ea341a1958e0741c.ctex"
+uid="uid://o80clhap7fbf"
+path="res://.godot/imported/gray_controls.png-ac9f9bc46674eccb2bb5f62820e09c7c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Framework/Player Select Screen/assets/p4_controls.png"
-dest_files=["res://.godot/imported/p4_controls.png-ab8f3fe2bb486473ea341a1958e0741c.ctex"]
+source_file="res://Framework/Player Select Screen/assets/gray_controls.png"
+dest_files=["res://.godot/imported/gray_controls.png-ac9f9bc46674eccb2bb5f62820e09c7c.ctex"]
 
 [params]
 

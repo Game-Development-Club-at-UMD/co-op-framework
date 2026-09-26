@@ -1,7 +1,63 @@
 [gd_scene format=3 uid="uid://c1i2cg7cfruw0"]
 
-[ext_resource type="Texture2D" uid="uid://c07xh33f1oqux" path="res://Framework/Player Select Screen/assets/p1_controls.png" id="1_negao"]
 [ext_resource type="Script" uid="uid://j625s1r5tioo" path="res://Framework/Player Select Screen/ui_elements/player_input_card.gd" id="1_wwkgb"]
+[ext_resource type="Texture2D" uid="uid://o80clhap7fbf" path="res://Framework/Player Select Screen/assets/gray_controls.png" id="2_wwkgb"]
+
+[sub_resource type="Animation" id="Animation_wwkgb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [48.0]
+}
+
+[sub_resource type="Animation" id="Animation_g4eks"]
+resource_name = "connect"
+length = 0.19999999999999998
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset:y")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [48.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_y7g5w"]
+resource_name = "disconnect"
+length = 0.19999999999999998
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset:y")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 48.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y7g5w"]
+_data = {
+&"RESET": SubResource("Animation_wwkgb"),
+&"connect": SubResource("Animation_g4eks"),
+&"disconnect": SubResource("Animation_y7g5w")
+}
 
 [node name="Player Input Card" type="Control" unique_id=1057364299]
 custom_minimum_size = Vector2(128, 128)
@@ -17,13 +73,28 @@ offset_bottom = -64.15201
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
-size_flags_vertical = 10
+size_flags_vertical = 6
 script = ExtResource("1_wwkgb")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=99255811]
 texture_filter = 1
 position = Vector2(64, 64)
 scale = Vector2(4, 4)
-texture = ExtResource("1_negao")
+texture = ExtResource("2_wwkgb")
+offset = Vector2(0, 48)
 hframes = 2
 vframes = 2
+
+[node name="InputHint Timer" type="Timer" parent="." unique_id=1407389181]
+wait_time = 1.5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1101917504]
+libraries/ = SubResource("AnimationLibrary_y7g5w")
+
+[node name="TextureButton" type="TextureButton" parent="." unique_id=1798312036]
+layout_mode = 0
+offset_top = 232.0
+offset_right = 128.0
+offset_bottom = 272.0
+
+[connection signal="timeout" from="InputHint Timer" to="." method="_on_input_hint_timer_timeout"]

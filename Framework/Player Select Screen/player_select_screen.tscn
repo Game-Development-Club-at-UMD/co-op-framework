@@ -55,9 +55,12 @@ layout_mode = 2
 
 [node name="Player Input Card2" parent="CanvasLayer/Control/MarginContainer/HBoxContainer" unique_id=1240820211 instance=ExtResource("2_ibhy5")]
 layout_mode = 2
+player_num = 2
 
 [node name="Player Input Card3" parent="CanvasLayer/Control/MarginContainer/HBoxContainer" unique_id=1004195052 instance=ExtResource("2_ibhy5")]
 layout_mode = 2
+player_num = 3
 
 [node name="Player Input Card4" parent="CanvasLayer/Control/MarginContainer/HBoxContainer" unique_id=1203042942 instance=ExtResource("2_ibhy5")]
 layout_mode = 2
+player_num = 4

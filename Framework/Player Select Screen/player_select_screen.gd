@@ -1,5 +1,17 @@
 extends Node2D
 
+## Always 4.
+const MAX_PLAYER_COUNT: int = 4
+
+## Holds all possible control types. At the start of the project, the allowed controls are added.
+var allowed_control_types: Array[String] = []
+
+## Stores controls currently being used to prevent multiple players from joining with the same input controller.
+var currently_used_controls: Array[String] = []
+
+## Used to determine which player to add new inputs to.
+var player_count = 0
+
 ## Determines the minimum number of players your game can have. Ranges from 1 to 4.
 ## This will likely be fetched from export settings on the developer's actual game in the future.
 @export_range(1, 4, 1) var minimum_players: int = 1
@@ -7,3 +19,97 @@ extends Node2D
 ## Determines the max number of players your game can have. Ranges from 1 to 4.
 ## This will likely be fetched from export settings on the developer's actual game in the future.
 @export_range(1, 4, 1) var maximum_players: int = 4
+
+## Allows players to connect to the game with WASD controls.
+@export var allow_wasd: bool = true
+## Allows players to connect to the game with arrow key controls.
+@export var allow_arrow_keys: bool = true
+## Allows players to connect to the game with a controller.
+@export var allow_controller: bool = true
+
+## I am resisting the urge to get_parent().get_parent().get_parent().get_parent().
+## Referenced when starting up the actual game.
+var framework_control: Node
+
+@onready var player_input_card_1: Control = $"CanvasLayer/Control/MarginContainer/HBoxContainer/Player Input Card"
+@onready var player_input_card_2: Control = $"CanvasLayer/Control/MarginContainer/HBoxContainer/Player Input Card2"
+@onready var player_input_card_3: Control = $"CanvasLayer/Control/MarginContainer/HBoxContainer/Player Input Card3"
+@onready var player_input_card_4: Control = $"CanvasLayer/Control/MarginContainer/HBoxContainer/Player Input Card4"
+
+@onready var player_input_cards: Array[Control] = [
+	player_input_card_1,
+	player_input_card_2,
+	player_input_card_3,
+	player_input_card_4
+]
+
+func _ready() -> void:
+	# gray-out all players that COULD join, but don't have to join. Colors in the rest.
+	for i in range(0, MAX_PLAYER_COUNT):
+		# also makes sure controller hints work
+		player_input_cards[i].set_valid_controls(allow_wasd, allow_arrow_keys, allow_controller)
+		if i < minimum_players:
+			player_input_cards[i].set_needs_to_exist_to_play_game(true)
+		else:
+			player_input_cards[i].set_needs_to_exist_to_play_game(false)
+		player_input_cards[i].disconnect_control_type()
+	
+	# hide all players that can never join
+	for i in range(0, MAX_PLAYER_COUNT):
+		if i >= maximum_players:
+			player_input_cards[i].hide()
+		else:
+			player_input_cards[i].show()
+	
+	# set-up for allowed controls
+	if allow_wasd:
+		allowed_control_types.append("keyboard_wasd")
+	if allow_arrow_keys:
+		allowed_control_types.append("keyboard_arrow_keys")
+	if allow_controller:
+		allowed_control_types.append("controller_1")
+		allowed_control_types.append("controller_2")
+		allowed_control_types.append("controller_3")
+		allowed_control_types.append("controller_4")
+
+func _process(_delta: float) -> void:
+	# the reason we can't use a "keyboard_join" input is because control sticks ignore negative inputs when you do this. Don't know why. 
+	if Input.is_action_just_pressed("keyboard_wasd_up") or Input.is_action_just_pressed("keyboard_wasd_down") or Input.is_action_just_pressed("keyboard_wasd_left") or Input.is_action_just_pressed("keyboard_wasd_right"):
+		add_new_player("keyboard_wasd")
+	if Input.is_action_just_pressed("keyboard_arrow_keys_up") or Input.is_action_just_pressed("keyboard_arrow_keys_down") or Input.is_action_just_pressed("keyboard_arrow_keys_left") or Input.is_action_just_pressed("keyboard_arrow_keys_right"):
+		add_new_player("keyboard_arrow_keys")
+	if Input.is_action_just_pressed("controller_1_up") or Input.is_action_just_pressed("controller_1_down") or Input.is_action_just_pressed("controller_1_left") or Input.is_action_just_pressed("controller_1_right"):
+		add_new_player("controller_1")
+	if Input.is_action_just_pressed("controller_2_up") or Input.is_action_just_pressed("controller_2_down") or Input.is_action_just_pressed("controller_2_left") or Input.is_action_just_pressed("controller_2_right"):
+		add_new_player("controller_2")
+	if Input.is_action_just_pressed("controller_3_up") or Input.is_action_just_pressed("controller_3_down") or Input.is_action_just_pressed("controller_3_left") or Input.is_action_just_pressed("controller_3_right"):
+		add_new_player("controller_3")
+	if Input.is_action_just_pressed("controller_4_up") or Input.is_action_just_pressed("controller_4_down") or Input.is_action_just_pressed("controller_4_left") or Input.is_action_just_pressed("controller_4_right"):
+		add_new_player("controller_4")
+	
+	if Input.is_action_just_pressed("DEBUG_START"):
+		start_game()
+
+## Assigns the node that will be called to start the game once the game starts.
+func assign_framework_control(parent_parent_parent_parent: Node) -> void:
+	framework_control = parent_parent_parent_parent
+
+## TRIES to add a new player with the given control scheme. Can fail.
+func add_new_player(control_name: String) -> void:
+	# fails if controls are already being used
+	if currently_used_controls.has(control_name): return
+	# also fails if controls are not in the allowed list
+	if !allowed_control_types.has(control_name): return
+	# prevents player count from exceeding max players and causing major issues
+	if player_count >= maximum_players: return
+	# otherwise, add the player! :D
+	player_input_cards[player_count].connect_control_type(control_name)
+	currently_used_controls.append(control_name)
+	player_count += 1
+	CoopInput.get_player(player_count).assign_inputs(control_name)
+
+## TRIES to start game. Fails if there aren't enough players.
+func start_game() -> void:
+	if player_count < minimum_players: return
+	if framework_control != null:
+		framework_control.start_game(player_count)

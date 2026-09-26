@@ -17,8 +17,11 @@ const MAX_PLAYER_COUNT = 4
 	player_view_p4
 ]
 
+## The game starts with this screen to connect players before starting.
+@onready var player_select_screen: PackedScene = preload("res://Framework/Player Select Screen/player_select_screen.tscn")
 ## We should assign this to a base Node scene we create for them so they don't have to touch this part.
-@export var game: PackedScene
+@export var game: PackedScene = preload("res://Example Game/scenes/example_game.tscn")
+
 ## Set to false if you want all players to share the same screen.
 @export var splitscreen: bool = true
 ## When true: screen is split by a | (vertically) when playing with 2 players.
@@ -29,17 +32,20 @@ const MAX_PLAYER_COUNT = 4
 ## Number of players. Purely for testing the framework because we'll implement a different way to modify this.
 @export var player_count: int = 4
 
+## This becomes the player select scene once instantiated.
+#var player_select: Node
+
 ## This becomes the instantiated game scene. Referenced for cameras.
-var world: Node
+# var world: Node
+
+## Swaps between player_select and actual game world.
+var child_scene: Node
 
 func _ready() -> void:
 	# modifies grid container to match splitscreen preferences
 	grid_container.add_theme_constant_override("h_separation", splitscreen_line_thickness)
 	grid_container.add_theme_constant_override("v_separation", splitscreen_line_thickness)
-	# this creates the world (should be YOUR game, currently an example game)
-	world = game.instantiate()
-	player_viewport_containers[0].add_game(game.instantiate())
-	update_player_view_count()
+	start_player_select()
 
 ## Modifies the number of viewports on screen to match the number of players.
 func update_player_view_count() -> void:
@@ -74,6 +80,22 @@ func update_player_view_count() -> void:
 		else:
 			player_viewport_containers[i].show()
 
+func start_player_select() -> void:
+	player_count = 1
+	if child_scene != null:
+		child_scene.queue_free()
+	child_scene = player_select_screen.instantiate()
+	child_scene.assign_framework_control(self)
+	player_view_p1.add_game(child_scene)
+	update_player_view_count()
+
+func start_game(new_player_count: int) -> void:
+	player_count = new_player_count
+	if child_scene != null:
+		child_scene.queue_free()
+	child_scene = game.instantiate()
+	player_view_p1.add_game(child_scene)
+	update_player_view_count()
 
 ## This method is purely for testing. Reduces player count by 1 every time it times out, then updates screens to match.
 func _on_timer_timeout() -> void:
