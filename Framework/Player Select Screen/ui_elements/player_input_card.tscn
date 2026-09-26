@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://c1i2cg7cfruw0"]
+
+[ext_resource type="Texture2D" uid="uid://c07xh33f1oqux" path="res://Framework/Player Select Screen/assets/p1_controls.png" id="1_negao"]
+[ext_resource type="Script" uid="uid://j625s1r5tioo" path="res://Framework/Player Select Screen/ui_elements/player_input_card.gd" id="1_wwkgb"]
+
+[node name="Player Input Card" type="Control" unique_id=1057364299]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 3
+anchor_left = -0.056
+anchor_top = -0.09900001
+anchor_right = 0.056
+anchor_bottom = 0.09900001
+offset_left = 64.0
+offset_top = 64.15201
+offset_right = -64.0
+offset_bottom = -64.15201
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 10
+script = ExtResource("1_wwkgb")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=99255811]
+texture_filter = 1
+position = Vector2(64, 64)
+scale = Vector2(4, 4)
+texture = ExtResource("1_negao")
+hframes = 2
+vframes = 2
