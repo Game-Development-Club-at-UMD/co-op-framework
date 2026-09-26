@@ -1,6 +1,7 @@
 extends SubViewportContainer
 
 @onready var subviewport = $"SubViewport"
+@onready var camera = $"SubViewport/Camera2D"
 
 func set_viewport_world_2d(new_world_2d: World2D) -> void:
 	subviewport.world_2d = new_world_2d

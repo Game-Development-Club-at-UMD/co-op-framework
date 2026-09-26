@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://d2he756o6q1d4"]
+
+[ext_resource type="Script" uid="uid://x1xsyadc5qyg" path="res://Framework/Player Select Screen/player_select_screen.gd" id="1_spkw6"]
+
+[node name="Player Select Screen" type="Node2D" unique_id=273084959]
+script = ExtResource("1_spkw6")
