@@ -6,14 +6,20 @@ extends Control
 @onready var sprite = $"Sprite2D"
 @onready var timer = $"InputHint Timer"
 @onready var anim = $"AnimationPlayer"
+@onready var disconnect_button = $"Disconnect"
 
 ## When true, this player needs to connect to the game for it to start.
 var needs_to_exist_to_play_game: bool = false
+
+## When true, you can disconnect.
+var connected: bool = false
 
 ## Loaded when player MUST exist for the game to run, or whenever the player is joined.
 @onready var connected_texture: Texture = load("res://Framework/Player Select Screen/assets/p" + str(player_num) + "_controls.png")
 ## Loaded whenever the player is disconnected and doesn't need to join for the game to start.
 @onready var disconnected_texture: Texture = load("res://Framework/Player Select Screen/assets/gray_controls.png")
+
+var player_select_screen: Node
 
 ## Determines what inputs are hinted when no player is connected.
 ## 1 represents keyboard_wasd, 2 represents keyboard_arrow_keys, 3 represents controller.
@@ -33,6 +39,7 @@ func connect_control_type(control_type: String) -> void:
 	timer.stop()
 	anim.stop(true)
 	anim.play("connect")
+	connected = true
 
 ## Runs when controller is disconnected. Stays colored if player must be connected for the game to start (like P1).
 func disconnect_control_type() -> void:
@@ -44,6 +51,7 @@ func disconnect_control_type() -> void:
 	_on_input_hint_timer_timeout()
 	anim.stop(true)
 	anim.play("disconnect")
+	connected = false
 
 ## Sets the controls that this input card will hint at.
 func set_valid_controls(wasd: bool, arrow_keys: bool, controller: bool) -> void:
@@ -71,3 +79,14 @@ func _on_input_hint_timer_timeout() -> void:
 		sprite.frame = allowed_input_methods[current_index]
 	# written this way to make the animation prettier when connecting/disconnecting
 	timer.start()
+
+## Runs whenever disconnect is pressed, either by mouse or cursor.
+func disconnect_pressed() -> void:
+	if connected and player_select_screen != null:
+		player_select_screen.remove_player(player_num)
+
+func _on_texture_button_pressed() -> void:
+	disconnect_pressed()
+
+func set_player_select_screen(screen: Node) -> void:
+	player_select_screen = screen

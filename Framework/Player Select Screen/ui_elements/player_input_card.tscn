@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://j625s1r5tioo" path="res://Framework/Player Select Screen/ui_elements/player_input_card.gd" id="1_wwkgb"]
 [ext_resource type="Texture2D" uid="uid://o80clhap7fbf" path="res://Framework/Player Select Screen/assets/gray_controls.png" id="2_wwkgb"]
+[ext_resource type="Texture2D" uid="uid://bqrlkku2tnrlg" path="res://Framework/Player Select Screen/assets/disconnect.png" id="3_g4eks"]
+[ext_resource type="Texture2D" uid="uid://b73iup1s60dd0" path="res://Framework/Player Select Screen/assets/disconnect_pressed.png" id="4_o5dok"]
+[ext_resource type="Texture2D" uid="uid://ddrfi5ddfjier" path="res://Framework/Player Select Screen/assets/disconnect_highlighted.png" id="5_n3q4h"]
 
 [sub_resource type="Animation" id="Animation_wwkgb"]
 length = 0.001
@@ -17,10 +20,34 @@ tracks/0/keys = {
 "update": 1,
 "values": [48.0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Disconnect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Disconnect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_g4eks"]
 resource_name = "connect"
-length = 0.19999999999999998
+length = 0.2
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -34,10 +61,34 @@ tracks/0/keys = {
 "update": 0,
 "values": [48.0, 0.0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Disconnect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Disconnect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_y7g5w"]
 resource_name = "disconnect"
-length = 0.19999999999999998
+length = 0.2
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -50,6 +101,30 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 48.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Disconnect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Disconnect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y7g5w"]
@@ -77,6 +152,7 @@ size_flags_vertical = 6
 script = ExtResource("1_wwkgb")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=99255811]
+z_index = 1
 texture_filter = 1
 position = Vector2(64, 64)
 scale = Vector2(4, 4)
@@ -91,10 +167,30 @@ wait_time = 1.5
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1101917504]
 libraries/ = SubResource("AnimationLibrary_y7g5w")
 
-[node name="TextureButton" type="TextureButton" parent="." unique_id=1798312036]
+[node name="Disconnect" type="TextureButton" parent="." unique_id=1798312036]
+visible = false
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
 layout_mode = 0
-offset_top = 232.0
-offset_right = 128.0
-offset_bottom = 272.0
+offset_left = -16.0
+offset_top = 224.0
+offset_right = 24.0
+offset_bottom = 248.0
+scale = Vector2(4, 4)
+texture_normal = ExtResource("3_g4eks")
+texture_pressed = ExtResource("4_o5dok")
+texture_hover = ExtResource("5_n3q4h")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Disconnect" unique_id=713293357]
+layout_mode = 0
+offset_top = 2.75
+offset_right = 160.0
+offset_bottom = 87.75
+scale = Vector2(0.25, 0.25)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[center]Leave"
 
 [connection signal="timeout" from="InputHint Timer" to="." method="_on_input_hint_timer_timeout"]
+[connection signal="pressed" from="Disconnect" to="." method="_on_texture_button_pressed"]

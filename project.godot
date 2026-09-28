@@ -19,11 +19,12 @@ config/icon="uid://dh0ramf8bubv3"
 [autoload]
 
 CoopInput="*uid://da1s3btexev0d"
+Cameras="*uid://cg2wie38365tq"
 
 [display]
 
 window/size/mode=3
-window/stretch/mode="canvas_items"
+window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
 [file_customization]

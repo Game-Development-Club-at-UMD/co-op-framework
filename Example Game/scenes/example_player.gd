@@ -1,7 +1,21 @@
 extends CharacterBody2D
 
-@export var player_number: int = 1
+@onready var sprite = $"Sprite2D"
+
+var camera: Camera2D
+
+const SPEED = 200
+
+var player_number: int = 1
 
 func _physics_process(_delta: float) -> void:
-	if Input.is_action_pressed(CoopInput.get_player(player_number).UP):
-		print("horray")
+	velocity.x = SPEED * Input.get_axis(CoopInput.get_player(player_number).LEFT, CoopInput.get_player(player_number).RIGHT)
+	velocity.y = SPEED * Input.get_axis(CoopInput.get_player(player_number).UP, CoopInput.get_player(player_number).DOWN)
+	move_and_slide()
+	camera.position = position
+
+func set_player_num(player_num: int) -> void:
+	player_number = player_num
+	sprite.frame = player_num - 1
+	position.x = player_number * 120 - 240
+	camera = Cameras.get_camera(player_num)

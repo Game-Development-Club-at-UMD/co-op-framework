@@ -53,6 +53,7 @@ func _ready() -> void:
 		else:
 			player_input_cards[i].set_needs_to_exist_to_play_game(false)
 		player_input_cards[i].disconnect_control_type()
+		player_input_cards[i].set_player_select_screen(self)
 	
 	# hide all players that can never join
 	for i in range(0, MAX_PLAYER_COUNT):
@@ -107,6 +108,15 @@ func add_new_player(control_name: String) -> void:
 	currently_used_controls.append(control_name)
 	player_count += 1
 	CoopInput.get_player(player_count).assign_inputs(control_name)
+
+## Removes player at given player number.
+func remove_player(player_num: int) -> void:
+	# just do the opposite of add_new_player
+	player_input_cards[player_num - 1].disconnect_control_type()
+	currently_used_controls.pop_at(player_num - 1)
+	player_count -= 1
+	# shift all other controllers left
+	
 
 ## TRIES to start game. Fails if there aren't enough players.
 func start_game() -> void:

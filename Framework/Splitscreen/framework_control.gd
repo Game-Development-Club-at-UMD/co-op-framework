@@ -42,6 +42,11 @@ const MAX_PLAYER_COUNT = 4
 var child_scene: Node
 
 func _ready() -> void:
+	# readies cameras, individually instead of a loop to prevent writing a setter that devs might accidentally use
+	Cameras.P1 = player_view_p1.get_camera()
+	Cameras.P2 = player_view_p2.get_camera()
+	Cameras.P3 = player_view_p3.get_camera()
+	Cameras.P4 = player_view_p4.get_camera()
 	# modifies grid container to match splitscreen preferences
 	grid_container.add_theme_constant_override("h_separation", splitscreen_line_thickness)
 	grid_container.add_theme_constant_override("v_separation", splitscreen_line_thickness)
@@ -80,6 +85,7 @@ func update_player_view_count() -> void:
 		else:
 			player_viewport_containers[i].show()
 
+## Starts up player select.
 func start_player_select() -> void:
 	player_count = 1
 	if child_scene != null:
@@ -89,12 +95,16 @@ func start_player_select() -> void:
 	player_view_p1.add_game(child_scene)
 	update_player_view_count()
 
+## Starts up actual game.
 func start_game(new_player_count: int) -> void:
 	player_count = new_player_count
 	if child_scene != null:
 		child_scene.queue_free()
 	child_scene = game.instantiate()
 	player_view_p1.add_game(child_scene)
+	# Game should have this method so we can give it player count.
+	if child_scene.has_method("start"):
+		child_scene.start(player_count)
 	update_player_view_count()
 
 ## This method is purely for testing. Reduces player count by 1 every time it times out, then updates screens to match.

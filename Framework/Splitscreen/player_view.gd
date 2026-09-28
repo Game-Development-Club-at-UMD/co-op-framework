@@ -17,3 +17,7 @@ func get_viewport_world_3d() -> World3D:
 
 func add_game(game: Node) -> void:
 	subviewport.add_child(game)
+
+## Currently always a Camera2D. Bad code.
+func get_camera() -> Camera2D:
+	return camera

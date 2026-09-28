@@ -1,11 +1,22 @@
 [gd_scene format=3 uid="uid://bvoswhpcw6t30"]
 
 [ext_resource type="Script" uid="uid://cywjqo66fw4j5" path="res://Example Game/scenes/example_player.gd" id="1_w5njd"]
+[ext_resource type="Texture2D" uid="uid://1hrijv756jxx" path="res://Example Game/assets/paladog.png" id="2_g5m00"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bk7jt"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_g5m00"]
+radius = 50.0
 
 [node name="ExamplePlayer" type="CharacterBody2D" unique_id=737787713]
+collision_layer = 2
+collision_mask = 3
+platform_floor_layers = 4294967293
 script = ExtResource("1_w5njd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=696502715]
-shape = SubResource("RectangleShape2D_bk7jt")
+shape = SubResource("CircleShape2D_g5m00")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=25563566]
+texture_filter = 1
+texture = ExtResource("2_g5m00")
+hframes = 2
+vframes = 2
