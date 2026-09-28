@@ -1,5 +1,10 @@
 extends Node2D
 
+@onready var anim = $"AnimationPlayer"
+
+## When true, prevents a player from joining on the given frame. Prevents disconnect button from instantly causing player to rejoin.
+var just_removed_player: bool = false
+
 ## Always 4.
 const MAX_PLAYER_COUNT: int = 4
 
@@ -7,7 +12,7 @@ const MAX_PLAYER_COUNT: int = 4
 var allowed_control_types: Array[String] = []
 
 ## Stores controls currently being used to prevent multiple players from joining with the same input controller.
-var currently_used_controls: Array[String] = []
+var currently_used_controls: Array[String] = ["", "", "", ""]
 
 ## Used to determine which player to add new inputs to.
 var player_count = 0
@@ -43,7 +48,19 @@ var framework_control: Node
 	player_input_card_4
 ]
 
+@onready var player_cursors: Array[CharacterBody2D] = [
+	$"CanvasLayer/Player Cursor 1",
+	$"CanvasLayer/Player Cursor 2",
+	$"CanvasLayer/Player Cursor 3",
+	$"CanvasLayer/Player Cursor 4",
+]
+
+## Little animation variable.
+var instructions_visible = true
+
 func _ready() -> void:
+	anim.play("show_prompt")
+	
 	# gray-out all players that COULD join, but don't have to join. Colors in the rest.
 	for i in range(0, MAX_PLAYER_COUNT):
 		# also makes sure controller hints work
@@ -75,18 +92,21 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	# the reason we can't use a "keyboard_join" input is because control sticks ignore negative inputs when you do this. Don't know why. 
-	if Input.is_action_just_pressed("keyboard_wasd_up") or Input.is_action_just_pressed("keyboard_wasd_down") or Input.is_action_just_pressed("keyboard_wasd_left") or Input.is_action_just_pressed("keyboard_wasd_right"):
-		add_new_player("keyboard_wasd")
-	if Input.is_action_just_pressed("keyboard_arrow_keys_up") or Input.is_action_just_pressed("keyboard_arrow_keys_down") or Input.is_action_just_pressed("keyboard_arrow_keys_left") or Input.is_action_just_pressed("keyboard_arrow_keys_right"):
-		add_new_player("keyboard_arrow_keys")
-	if Input.is_action_just_pressed("controller_1_up") or Input.is_action_just_pressed("controller_1_down") or Input.is_action_just_pressed("controller_1_left") or Input.is_action_just_pressed("controller_1_right"):
-		add_new_player("controller_1")
-	if Input.is_action_just_pressed("controller_2_up") or Input.is_action_just_pressed("controller_2_down") or Input.is_action_just_pressed("controller_2_left") or Input.is_action_just_pressed("controller_2_right"):
-		add_new_player("controller_2")
-	if Input.is_action_just_pressed("controller_3_up") or Input.is_action_just_pressed("controller_3_down") or Input.is_action_just_pressed("controller_3_left") or Input.is_action_just_pressed("controller_3_right"):
-		add_new_player("controller_3")
-	if Input.is_action_just_pressed("controller_4_up") or Input.is_action_just_pressed("controller_4_down") or Input.is_action_just_pressed("controller_4_left") or Input.is_action_just_pressed("controller_4_right"):
-		add_new_player("controller_4")
+	if !just_removed_player:
+		if Input.is_action_just_pressed("keyboard_wasd_any"):
+			add_new_player("keyboard_wasd")
+		if Input.is_action_just_pressed("keyboard_arrow_keys_any"):
+			add_new_player("keyboard_arrow_keys")
+		if (Input.is_action_just_pressed("controller_1_up") or Input.is_action_just_pressed("controller_1_down") or Input.is_action_just_pressed("controller_1_left") or Input.is_action_just_pressed("controller_1_right")):
+			add_new_player("controller_1")
+		if (Input.is_action_just_pressed("controller_2_up") or Input.is_action_just_pressed("controller_2_down") or Input.is_action_just_pressed("controller_2_left") or Input.is_action_just_pressed("controller_2_right")):
+			add_new_player("controller_2")
+		if (Input.is_action_just_pressed("controller_3_up") or Input.is_action_just_pressed("controller_3_down") or Input.is_action_just_pressed("controller_3_left") or Input.is_action_just_pressed("controller_3_right")):
+			add_new_player("controller_3")
+		if (Input.is_action_just_pressed("controller_4_up") or Input.is_action_just_pressed("controller_4_down") or Input.is_action_just_pressed("controller_4_left") or Input.is_action_just_pressed("controller_4_right")):
+			add_new_player("controller_4")
+	else:
+		just_removed_player = false
 	
 	if Input.is_action_just_pressed("DEBUG_START"):
 		start_game()
@@ -104,22 +124,40 @@ func add_new_player(control_name: String) -> void:
 	# prevents player count from exceeding max players and causing major issues
 	if player_count >= maximum_players: return
 	# otherwise, add the player! :D
-	player_input_cards[player_count].connect_control_type(control_name)
-	currently_used_controls.append(control_name)
+	var player_num: int = currently_used_controls.find("") + 1
+	player_input_cards[player_num - 1].connect_control_type(control_name)
+	currently_used_controls[player_num - 1] = control_name
 	player_count += 1
-	CoopInput.get_player(player_count).assign_inputs(control_name)
+	CoopInput.get_player(player_num).assign_inputs(control_name)
+	
+	# activates corresponding cursor
+	player_cursors[player_num - 1].activate(player_input_cards[player_num - 1].global_position)
+	
+	# cosmetic anim
+	if instructions_visible:
+		instructions_visible = false
+		anim.stop(true)
+		anim.play("hide_prompt")
 
 ## Removes player at given player number.
 func remove_player(player_num: int) -> void:
 	# just do the opposite of add_new_player
 	player_input_cards[player_num - 1].disconnect_control_type()
-	currently_used_controls.pop_at(player_num - 1)
+	# set control type of the removed player to nothing
+	currently_used_controls[player_num - 1] = ""
+	#currently_used_controls.pop_at(player_num - 1)
 	player_count -= 1
-	# shift all other controllers left
-	
+	# activates corresponding cursor
+	player_cursors[player_num - 1].deactivate()
+	just_removed_player = true
 
 ## TRIES to start game. Fails if there aren't enough players.
 func start_game() -> void:
 	if player_count < minimum_players: return
 	if framework_control != null:
-		framework_control.start_game(player_count)
+		# apparently need this nonsense to make Godot not freak out about my static typed methods
+		var joined_players: Array[bool]
+		# an array of booleans that equals [true, false, true, true], etc. that contains the existence of P1, P2, P3, and P4
+		joined_players.assign([(currently_used_controls[0] != ""), (currently_used_controls[1] != ""), (currently_used_controls[2] != ""), (currently_used_controls[3] != "")])
+		# then actually start the thing
+		framework_control.start_game(player_count, joined_players)

@@ -96,7 +96,7 @@ func start_player_select() -> void:
 	update_player_view_count()
 
 ## Starts up actual game.
-func start_game(new_player_count: int) -> void:
+func start_game(new_player_count: int, joined_players: Array[bool]) -> void:
 	player_count = new_player_count
 	if child_scene != null:
 		child_scene.queue_free()
@@ -104,7 +104,7 @@ func start_game(new_player_count: int) -> void:
 	player_view_p1.add_game(child_scene)
 	# Game should have this method so we can give it player count.
 	if child_scene.has_method("start"):
-		child_scene.start(player_count)
+		child_scene.start(player_count, joined_players)
 	update_player_view_count()
 
 ## This method is purely for testing. Reduces player count by 1 every time it times out, then updates screens to match.

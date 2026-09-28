@@ -1,12 +1,124 @@
 [gd_scene format=3 uid="uid://d2he756o6q1d4"]
 
 [ext_resource type="Script" uid="uid://x1xsyadc5qyg" path="res://Framework/Player Select Screen/player_select_screen.gd" id="1_spkw6"]
+[ext_resource type="PackedScene" uid="uid://us3c0c08644t" path="res://Framework/Player Select Screen/ui_elements/custom_mouse_cursor_hitbox.tscn" id="2_2xbvh"]
 [ext_resource type="PackedScene" uid="uid://c1i2cg7cfruw0" path="res://Framework/Player Select Screen/ui_elements/player_input_card.tscn" id="2_ibhy5"]
+[ext_resource type="PackedScene" uid="uid://c1rciqw7e2h1j" path="res://Framework/Player Select Screen/ui_elements/player_cursor.tscn" id="2_mwa63"]
+[ext_resource type="PackedScene" uid="uid://dmsljxp81h6us" path="res://Framework/Player Select Screen/ui_elements/screen_boundary.tscn" id="4_3lm85"]
+
+[sub_resource type="Animation" id="Animation_ibhy5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/Control/Instructions:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/Control/Instructions:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_mwa63"]
+resource_name = "hide_prompt"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/Control/Instructions:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/Control/Instructions:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_3lm85"]
+resource_name = "show_prompt"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/Control/Instructions:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/Control/Instructions:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2xbvh"]
+_data = {
+&"RESET": SubResource("Animation_ibhy5"),
+&"hide_prompt": SubResource("Animation_mwa63"),
+&"show_prompt": SubResource("Animation_3lm85")
+}
 
 [node name="Player Select Screen" type="Node2D" unique_id=273084959]
 script = ExtResource("1_spkw6")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1560416840]
+
+[node name="CustomMouseCursorHitbox" parent="CanvasLayer" unique_id=315720614 instance=ExtResource("2_2xbvh")]
+
+[node name="Player Cursor 1" parent="CanvasLayer" unique_id=854266018 instance=ExtResource("2_mwa63")]
+position = Vector2(528, 276)
+
+[node name="Player Cursor 2" parent="CanvasLayer" unique_id=1927478731 instance=ExtResource("2_mwa63")]
+position = Vector2(624, 276)
+player_number = 2
+
+[node name="Player Cursor 3" parent="CanvasLayer" unique_id=636344542 instance=ExtResource("2_mwa63")]
+position = Vector2(528, 372)
+player_number = 3
+
+[node name="Player Cursor 4" parent="CanvasLayer" unique_id=974292463 instance=ExtResource("2_mwa63")]
+position = Vector2(624, 372)
+player_number = 4
 
 [node name="Control" type="Control" parent="CanvasLayer" unique_id=1769204983]
 layout_mode = 3
@@ -80,6 +192,8 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Instructions" type="RichTextLabel" parent="CanvasLayer/Control/Control" unique_id=1003530152]
+visible = false
+modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = -556.0
 offset_top = -40.0
@@ -89,3 +203,55 @@ mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 64
 bbcode_enabled = true
 text = "[center]Press any button to join!"
+
+[node name="Screen Boundaries" type="Control" parent="CanvasLayer/Control" unique_id=1694116579]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Right" type="Control" parent="CanvasLayer/Control/Screen Boundaries" unique_id=1886426473]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Screen Boundary" parent="CanvasLayer/Control/Screen Boundaries/Right" unique_id=1883002021 instance=ExtResource("4_3lm85")]
+rotation = -1.5707964
+
+[node name="Top" type="Control" parent="CanvasLayer/Control/Screen Boundaries" unique_id=1428303671]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="Screen Boundary" parent="CanvasLayer/Control/Screen Boundaries/Top" unique_id=2057307190 instance=ExtResource("4_3lm85")]
+rotation = 3.1415927
+
+[node name="Left" type="Control" parent="CanvasLayer/Control/Screen Boundaries" unique_id=2029798399]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+
+[node name="Screen Boundary" parent="CanvasLayer/Control/Screen Boundaries/Left" unique_id=311210628 instance=ExtResource("4_3lm85")]
+rotation = 1.5707964
+
+[node name="Bottom" type="Control" parent="CanvasLayer/Control/Screen Boundaries" unique_id=477194998]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Screen Boundary" parent="CanvasLayer/Control/Screen Boundaries/Bottom" unique_id=322407726 instance=ExtResource("4_3lm85")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1245314228]
+libraries/ = SubResource("AnimationLibrary_2xbvh")

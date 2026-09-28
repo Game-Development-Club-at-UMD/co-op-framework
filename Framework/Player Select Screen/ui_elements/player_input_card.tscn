@@ -5,6 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://bqrlkku2tnrlg" path="res://Framework/Player Select Screen/assets/disconnect.png" id="3_g4eks"]
 [ext_resource type="Texture2D" uid="uid://b73iup1s60dd0" path="res://Framework/Player Select Screen/assets/disconnect_pressed.png" id="4_o5dok"]
 [ext_resource type="Texture2D" uid="uid://ddrfi5ddfjier" path="res://Framework/Player Select Screen/assets/disconnect_highlighted.png" id="5_n3q4h"]
+[ext_resource type="Script" uid="uid://cvycrbsndygph" path="res://Framework/Player Select Screen/ui_elements/disconnect.gd" id="6_beris"]
+[ext_resource type="Texture2D" uid="uid://366n7qfd2f4q" path="res://Framework/Player Select Screen/assets/disconnect_spritesheet.png" id="6_n3q4h"]
+[ext_resource type="Script" uid="uid://doip7h8wi4ext" path="res://Framework/Player Select Screen/ui_elements/disconnect_area_2d.gd" id="8_01qer"]
 
 [sub_resource type="Animation" id="Animation_wwkgb"]
 length = 0.001
@@ -134,6 +137,9 @@ _data = {
 &"disconnect": SubResource("Animation_y7g5w")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bk7jt"]
+size = Vector2(40, 24)
+
 [node name="Player Input Card" type="Control" unique_id=1057364299]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 3
@@ -167,9 +173,10 @@ wait_time = 1.5
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1101917504]
 libraries/ = SubResource("AnimationLibrary_y7g5w")
 
-[node name="Disconnect" type="TextureButton" parent="." unique_id=1798312036]
+[node name="Disconnect" type="TextureButton" parent="." unique_id=1798312036 node_paths=PackedStringArray("parent")]
 visible = false
 modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1, 1, 1, 0)
 texture_filter = 1
 layout_mode = 0
 offset_left = -16.0
@@ -180,6 +187,13 @@ scale = Vector2(4, 4)
 texture_normal = ExtResource("3_g4eks")
 texture_pressed = ExtResource("4_o5dok")
 texture_hover = ExtResource("5_n3q4h")
+script = ExtResource("6_beris")
+parent = NodePath("..")
+
+[node name="FakeSprite" type="Sprite2D" parent="Disconnect" unique_id=993497284]
+position = Vector2(20, 12)
+texture = ExtResource("6_n3q4h")
+vframes = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Disconnect" unique_id=713293357]
 layout_mode = 0
@@ -192,5 +206,17 @@ theme_override_font_sizes/normal_font_size = 48
 bbcode_enabled = true
 text = "[center]Leave"
 
+[node name="Area2D" type="Area2D" parent="Disconnect" unique_id=814809513 node_paths=PackedStringArray("parent_button")]
+position = Vector2(20, 12)
+collision_layer = 32768
+collision_mask = 16384
+script = ExtResource("8_01qer")
+parent_button = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Disconnect/Area2D" unique_id=1447907896]
+shape = SubResource("RectangleShape2D_bk7jt")
+
 [connection signal="timeout" from="InputHint Timer" to="." method="_on_input_hint_timer_timeout"]
 [connection signal="pressed" from="Disconnect" to="." method="_on_texture_button_pressed"]
+[connection signal="area_entered" from="Disconnect/Area2D" to="Disconnect" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Disconnect/Area2D" to="Disconnect" method="_on_area_2d_area_exited"]

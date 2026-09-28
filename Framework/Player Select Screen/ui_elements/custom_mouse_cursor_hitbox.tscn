@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://us3c0c08644t"]
+
+[ext_resource type="Script" uid="uid://blurcuyxwkpj" path="res://Framework/Player Select Screen/ui_elements/custom_mouse_cursor_hitbox.gd" id="1_hpik0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bk7jt"]
+radius = 4.0
+
+[node name="CustomMouseCursorHitbox" type="Area2D" unique_id=315720614]
+editor_description = "Exists to create consistency between the mouse and the controller cursors."
+collision_layer = 16384
+collision_mask = 32768
+script = ExtResource("1_hpik0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2140017182]
+shape = SubResource("CircleShape2D_bk7jt")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
