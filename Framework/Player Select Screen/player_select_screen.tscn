@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://c1i2cg7cfruw0" path="res://Framework/Player Select Screen/ui_elements/player_input_card.tscn" id="2_ibhy5"]
 [ext_resource type="PackedScene" uid="uid://c1rciqw7e2h1j" path="res://Framework/Player Select Screen/ui_elements/player_cursor.tscn" id="2_mwa63"]
 [ext_resource type="PackedScene" uid="uid://dmsljxp81h6us" path="res://Framework/Player Select Screen/ui_elements/screen_boundary.tscn" id="4_3lm85"]
+[ext_resource type="PackedScene" uid="uid://dhwr667g8lp50" path="res://Framework/Player Select Screen/ui_elements/start_game.tscn" id="5_e50m0"]
 
 [sub_resource type="Animation" id="Animation_ibhy5"]
 length = 0.001
@@ -176,6 +177,25 @@ player_num = 3
 [node name="Player Input Card4" parent="CanvasLayer/Control/MarginContainer/HBoxContainer" unique_id=1203042942 instance=ExtResource("2_ibhy5")]
 layout_mode = 2
 player_num = 4
+
+[node name="Control 2" type="Control" parent="CanvasLayer/Control" unique_id=1433228755]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+
+[node name="Start Game" parent="CanvasLayer/Control/Control 2" unique_id=1640539613 node_paths=PackedStringArray("parent") instance=ExtResource("5_e50m0")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -80.0
+offset_top = 64.0
+offset_right = -40.0
+offset_bottom = 88.0
+parent = NodePath("../../../..")
 
 [node name="Control" type="Control" parent="CanvasLayer/Control" unique_id=1949118702]
 layout_mode = 1

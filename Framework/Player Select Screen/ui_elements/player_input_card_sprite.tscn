@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://b1ce8bdfkfn2h"]
+
+[ext_resource type="Shader" uid="uid://x1hmepypdwfn" path="res://Framework/Player Select Screen/ui_elements/player_input_card_sprite.gdshader" id="1_grltq"]
+[ext_resource type="Texture2D" uid="uid://bktvmwlyvxokj" path="res://Framework/Player Select Screen/assets/player_input_card/p1/controls.png" id="2_3q73j"]
+[ext_resource type="Texture2D" uid="uid://iower21eq0sr" path="res://Framework/Player Select Screen/assets/player_input_card/p1/base_light.png" id="2_grltq"]
+[ext_resource type="Script" uid="uid://b8g65jh8gtrec" path="res://Framework/Player Select Screen/ui_elements/player_input_card_sprite.gd" id="3_ms5lh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3q73j"]
+shader = ExtResource("1_grltq")
+
+[node name="Player Input Card Sprite" type="Sprite2D" unique_id=105265483]
+z_index = 1
+texture_filter = 1
+material = SubResource("ShaderMaterial_3q73j")
+scale = Vector2(4, 4)
+texture = ExtResource("2_grltq")
+offset = Vector2(0, 48)
+script = ExtResource("3_ms5lh")
+
+[node name="Controls" type="Sprite2D" parent="." unique_id=229150138]
+texture = ExtResource("2_3q73j")
+offset = Vector2(0, 48)
+hframes = 2
+vframes = 2
+frame = 1

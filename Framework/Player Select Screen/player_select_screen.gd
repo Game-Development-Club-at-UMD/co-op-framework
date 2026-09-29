@@ -107,9 +107,6 @@ func _process(_delta: float) -> void:
 			add_new_player("controller_4")
 	else:
 		just_removed_player = false
-	
-	if Input.is_action_just_pressed("DEBUG_START"):
-		start_game()
 
 ## Assigns the node that will be called to start the game once the game starts.
 func assign_framework_control(parent_parent_parent_parent: Node) -> void:

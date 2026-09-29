@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://dhwr667g8lp50"]
+
+[ext_resource type="Texture2D" uid="uid://bqrlkku2tnrlg" path="res://Framework/Player Select Screen/assets/disconnect.png" id="1_he4ma"]
+[ext_resource type="Texture2D" uid="uid://b73iup1s60dd0" path="res://Framework/Player Select Screen/assets/disconnect_pressed.png" id="2_p7ngr"]
+[ext_resource type="Texture2D" uid="uid://ddrfi5ddfjier" path="res://Framework/Player Select Screen/assets/disconnect_highlighted.png" id="3_cndwj"]
+[ext_resource type="Script" uid="uid://d385qp803064w" path="res://Framework/Player Select Screen/ui_elements/start_game.gd" id="4_he4ma"]
+[ext_resource type="Texture2D" uid="uid://366n7qfd2f4q" path="res://Framework/Player Select Screen/assets/disconnect_spritesheet.png" id="5_jyn8g"]
+[ext_resource type="Script" uid="uid://doip7h8wi4ext" path="res://Framework/Player Select Screen/ui_elements/disconnect_area_2d.gd" id="6_5q3va"]
+[ext_resource type="Shader" uid="uid://x1hmepypdwfn" path="res://Framework/Player Select Screen/ui_elements/player_input_card_sprite.gdshader" id="6_cndwj"]
+[ext_resource type="Texture2D" uid="uid://c7ry2ul5ongmh" path="res://Framework/Player Select Screen/assets/disconnect_back.png" id="7_kfeik"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bk7jt"]
+shader = ExtResource("6_cndwj")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bk7jt"]
+size = Vector2(40, 24)
+
+[node name="Start Game" type="TextureButton" unique_id=1640539613]
+self_modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+anchors_preset = -1
+anchor_left = -0.069000006
+anchor_right = 0.069000006
+anchor_bottom = 0.148
+offset_left = -0.5119934
+offset_right = -119.48801
+offset_bottom = -71.904
+scale = Vector2(4, 4)
+texture_normal = ExtResource("1_he4ma")
+texture_pressed = ExtResource("2_p7ngr")
+texture_hover = ExtResource("3_cndwj")
+script = ExtResource("4_he4ma")
+
+[node name="FakeSprite" type="Sprite2D" parent="." unique_id=109518972]
+position = Vector2(20, 12)
+texture = ExtResource("5_jyn8g")
+vframes = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="FakeSprite" unique_id=1138816366]
+material = SubResource("ShaderMaterial_bk7jt")
+texture = ExtResource("7_kfeik")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1427952211]
+layout_mode = 0
+offset_top = 2.75
+offset_right = 160.0
+offset_bottom = 87.75
+scale = Vector2(0.25, 0.25)
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[center]Start"
+
+[node name="Area2D" type="Area2D" parent="." unique_id=604879008 node_paths=PackedStringArray("parent_button")]
+position = Vector2(20, 12)
+collision_layer = 32768
+collision_mask = 16384
+script = ExtResource("6_5q3va")
+parent_button = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1404629565]
+shape = SubResource("RectangleShape2D_bk7jt")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
