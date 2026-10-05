@@ -95,17 +95,17 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	# the reason we can't use a "keyboard_join" input is because control sticks ignore negative inputs when you do this. Don't know why. 
 	if !just_removed_player:
-		if Input.is_action_just_pressed("keyboard_wasd_any"):
+		if Input.is_action_just_pressed("keyboard_wasd_join"):
 			add_new_player("keyboard_wasd")
-		if Input.is_action_just_pressed("keyboard_arrow_keys_any"):
+		if Input.is_action_just_pressed("keyboard_arrow_keys_join"):
 			add_new_player("keyboard_arrow_keys")
-		if (Input.is_action_just_pressed("controller_1_up") or Input.is_action_just_pressed("controller_1_down") or Input.is_action_just_pressed("controller_1_left") or Input.is_action_just_pressed("controller_1_right")):
+		if (Input.is_action_just_pressed("controller_1_join") or Input.is_action_just_pressed("controller_1_up") or Input.is_action_just_pressed("controller_1_down") or Input.is_action_just_pressed("controller_1_left") or Input.is_action_just_pressed("controller_1_right")):
 			add_new_player("controller_1")
-		if (Input.is_action_just_pressed("controller_2_up") or Input.is_action_just_pressed("controller_2_down") or Input.is_action_just_pressed("controller_2_left") or Input.is_action_just_pressed("controller_2_right")):
+		if (Input.is_action_just_pressed("controller_2_join") or Input.is_action_just_pressed("controller_2_up") or Input.is_action_just_pressed("controller_2_down") or Input.is_action_just_pressed("controller_2_left") or Input.is_action_just_pressed("controller_2_right")):
 			add_new_player("controller_2")
-		if (Input.is_action_just_pressed("controller_3_up") or Input.is_action_just_pressed("controller_3_down") or Input.is_action_just_pressed("controller_3_left") or Input.is_action_just_pressed("controller_3_right")):
+		if (Input.is_action_just_pressed("controller_3_join") or Input.is_action_just_pressed("controller_3_up") or Input.is_action_just_pressed("controller_3_down") or Input.is_action_just_pressed("controller_3_left") or Input.is_action_just_pressed("controller_3_right")):
 			add_new_player("controller_3")
-		if (Input.is_action_just_pressed("controller_4_up") or Input.is_action_just_pressed("controller_4_down") or Input.is_action_just_pressed("controller_4_left") or Input.is_action_just_pressed("controller_4_right")):
+		if (Input.is_action_just_pressed("controller_4_join") or Input.is_action_just_pressed("controller_4_join_alt")):
 			add_new_player("controller_4")
 	else:
 		just_removed_player = false
