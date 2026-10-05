@@ -55,6 +55,8 @@ var framework_control: Node
 	$"CanvasLayer/Player Cursor 4",
 ]
 
+@onready var start_game_button = $"CanvasLayer/Control/Control 2/Start Game"
+
 ## Little animation variable.
 var instructions_visible = true
 
@@ -135,6 +137,12 @@ func add_new_player(control_name: String) -> void:
 		instructions_visible = false
 		anim.stop(true)
 		anim.play("hide_prompt")
+	
+	# enable/disable start game button
+	if player_count >= minimum_players:
+		start_game_button.set_valid(true)
+	else:
+		start_game_button.set_valid(false)
 
 ## Removes player at given player number.
 func remove_player(player_num: int) -> void:
@@ -147,6 +155,12 @@ func remove_player(player_num: int) -> void:
 	# activates corresponding cursor
 	player_cursors[player_num - 1].deactivate()
 	just_removed_player = true
+	
+	# enable/disable start game button
+	if player_count >= minimum_players:
+		start_game_button.set_valid(true)
+	else:
+		start_game_button.set_valid(false)
 
 ## TRIES to start game. Fails if there aren't enough players.
 func start_game() -> void:

@@ -29,8 +29,8 @@ const MAX_PLAYER_COUNT = 4
 @export var vertical_2_player_splitscreen: bool = true
 ## Set to 0 to remove black lines between screens entirely, or increase if you want bigger lines between screens.
 @export var splitscreen_line_thickness: int = 2
-## Number of players. Purely for testing the framework because we'll implement a different way to modify this.
-@export var player_count: int = 4
+## Number of players. Used to set up splitscreen, and also passed into children.
+var player_count: int = 4
 
 ## This becomes the player select scene once instantiated.
 #var player_select: Node
