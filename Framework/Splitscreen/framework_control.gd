@@ -20,7 +20,10 @@ const MAX_PLAYER_COUNT = 4
 ## The game starts with this screen to connect players before starting.
 @onready var player_select_screen: PackedScene = preload("res://Framework/Player Select Screen/player_select_screen.tscn")
 ## We should assign this to a base Node scene we create for them so they don't have to touch this part.
-@export var game: PackedScene = preload("res://Example Game/scenes/example_game.tscn")
+@export var game: PackedScene = preload("res://Example Game 2D/scenes/example_game.tscn")
+
+## If true, the game will load 3D cameras instead of 2D ones.
+@export var in_3d: bool = false
 
 ## Set to false if you want all players to share the same screen.
 @export var splitscreen: bool = true
@@ -43,10 +46,10 @@ var child_scene: Node
 
 func _ready() -> void:
 	# readies cameras, individually instead of a loop to prevent writing a setter that devs might accidentally use
-	Cameras.P1 = player_view_p1.get_camera()
-	Cameras.P2 = player_view_p2.get_camera()
-	Cameras.P3 = player_view_p3.get_camera()
-	Cameras.P4 = player_view_p4.get_camera()
+	Cameras.P1 = player_view_p1.get_camera(in_3d)
+	Cameras.P2 = player_view_p2.get_camera(in_3d)
+	Cameras.P3 = player_view_p3.get_camera(in_3d)
+	Cameras.P4 = player_view_p4.get_camera(in_3d)
 	# modifies grid container to match splitscreen preferences
 	grid_container.add_theme_constant_override("h_separation", splitscreen_line_thickness)
 	grid_container.add_theme_constant_override("v_separation", splitscreen_line_thickness)

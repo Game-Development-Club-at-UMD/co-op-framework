@@ -1,7 +1,8 @@
 extends SubViewportContainer
 
 @onready var subviewport = $"SubViewport"
-@onready var camera = $"SubViewport/Camera2D"
+@onready var camera_2d = $"SubViewport/Camera2D"
+@onready var camera_3d = $"SubViewport/Camera3D"
 
 func set_viewport_world_2d(new_world_2d: World2D) -> void:
 	subviewport.world_2d = new_world_2d
@@ -18,6 +19,11 @@ func get_viewport_world_3d() -> World3D:
 func add_game(game: Node) -> void:
 	subviewport.add_child(game)
 
-## Currently always a Camera2D. Bad code.
-func get_camera() -> Camera2D:
-	return camera
+## Returns relevant camera and makes the camera valid.
+func get_camera(in_3d: bool) -> Node:
+	if in_3d:
+		camera_3d.process_mode = Node.PROCESS_MODE_INHERIT
+		return camera_3d
+	else:
+		camera_2d.process_mode = Node.PROCESS_MODE_INHERIT
+		return camera_2d

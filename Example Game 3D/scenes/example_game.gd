@@ -1,6 +1,6 @@
-extends Node2D
+extends Node3D
 
-var player = preload("res://Example Game/scenes/example_player.tscn")
+var player = preload("res://Example Game 3D/scenes/player.tscn")
 
 ## Indicates the number of players in the game.
 var number_of_players: int
@@ -19,12 +19,6 @@ func start(player_count: int, joined_players: Array[bool]) -> void:
 	
 	# then iterates through player list to assign cameras by order so they match splitscreen set-up
 	for i in stored_players.size():
-		if player_count >= 3:
-			# zooms out cameras for when there's more players?
-			Cameras.get_camera(i + 1).zoom = Vector2(0.5, 0.5)
-		elif player_count == 2:
-			# zooms out cameras for when there's more players?
-			Cameras.get_camera(i + 1).zoom = Vector2(0.75, 0.75)
 		stored_players[i].set_camera(Cameras.get_camera(i + 1))
 	
 	number_of_players = player_count

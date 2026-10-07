@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://bemsyclecc3nw"]
+
+[ext_resource type="Script" uid="uid://bd0klx83ij0x4" path="res://Example Game 3D/scenes/example_game.gd" id="1_yoai5"]
+[ext_resource type="Texture2D" uid="uid://6rcywtnqjtvb" path="res://Example Game 3D/assets/grass.png" id="2_yoai5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bk7jt"]
+size = Vector3(64, 1, 64)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ubgsl"]
+albedo_texture = ExtResource("2_yoai5")
+uv1_scale = Vector3(8, 8, 8)
+texture_filter = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_p2ugp"]
+material = SubResource("StandardMaterial3D_ubgsl")
+size = Vector2(64, 64)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3f5e3"]
+sky_top_color = Color(0.18164769, 0.3605309, 1, 1)
+sky_horizon_color = Color(0.48235294, 0.6431373, 1, 1)
+ground_bottom_color = Color(0.3072, 0.41258675, 0.64, 1)
+ground_horizon_color = Color(0.48235294, 0.6431373, 1, 1)
+ground_curve = 0.1837917
+
+[sub_resource type="Sky" id="Sky_ocnln"]
+sky_material = SubResource("ProceduralSkyMaterial_3f5e3")
+
+[sub_resource type="Environment" id="Environment_bk7jt"]
+background_mode = 2
+sky = SubResource("Sky_ocnln")
+
+[node name="Example Game" type="Node3D" unique_id=139932738]
+script = ExtResource("1_yoai5")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1580362075]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=2065884853]
+shape = SubResource("BoxShape3D_bk7jt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1879626928]
+mesh = SubResource("PlaneMesh_p2ugp")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=574945594]
+environment = SubResource("Environment_bk7jt")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1106445245]
+transform = Transform3D(0.9015815, 0.24279359, 0.35805315, -0.4326093, 0.5059952, 0.74620247, 0, -0.8276594, 0.56123066, 0, 0, 0)

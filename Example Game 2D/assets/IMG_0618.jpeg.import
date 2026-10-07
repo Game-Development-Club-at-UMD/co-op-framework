@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1hrijv756jxx"
-path="res://.godot/imported/paladog.png-dac7f15620ffdad2425077672f967cf4.ctex"
+uid="uid://c6df44tthmwdi"
+path="res://.godot/imported/IMG_0618.jpeg-d44d8901bc9817a49ec5c183ea722c25.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Example Game/assets/paladog.png"
-dest_files=["res://.godot/imported/paladog.png-dac7f15620ffdad2425077672f967cf4.ctex"]
+source_file="res://Example Game 2D/assets/IMG_0618.jpeg"
+dest_files=["res://.godot/imported/IMG_0618.jpeg-d44d8901bc9817a49ec5c183ea722c25.ctex"]
 
 [params]
 

@@ -30,10 +30,11 @@ window/stretch/aspect="expand"
 [file_customization]
 
 folder_colors={
-"res://Example Game/": "red",
+"res://Example Game 2D/": "blue",
+"res://Example Game 3D/": "red",
 "res://Framework/": "gray",
 "res://Framework/Input Handling/": "purple",
-"res://Framework/Player Select Screen/": "blue",
+"res://Framework/Player Select Screen/": "yellow",
 "res://Framework/Splitscreen/": "orange",
 "res://YOUR GAME/": "green"
 }
