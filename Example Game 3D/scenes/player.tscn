@@ -16,4 +16,4 @@ shape = SubResource("CapsuleShape3D_bk7jt")
 mesh = SubResource("CapsuleMesh_bk7jt")
 
 [node name="Camera Pivot" type="Node3D" parent="." unique_id=1940837432]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)

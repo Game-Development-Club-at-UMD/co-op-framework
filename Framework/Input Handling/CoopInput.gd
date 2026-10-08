@@ -309,13 +309,6 @@ func _ready_setup_controller(num: int) -> void:
 		input.device = num - 1
 		InputMap.action_add_event("controller_" + str(num) + "_left_trigger", input)
 		InputMap.action_add_event("controller_" + str(num) + "_join", input)
-	# left trigger Nintendo
-	if false:#true:
-		var input = InputEventJoypadButton.new()
-		#input.button_index = WHATEVER_NINTENDO_IS
-		input.device = num - 1
-		InputMap.action_add_event("controller_" + str(num) + "_left_trigger", input)
-		InputMap.action_add_event("controller_" + str(num) + "_join", input)
 	
 	# right trigger
 	if true:
@@ -323,13 +316,6 @@ func _ready_setup_controller(num: int) -> void:
 		var input = InputEventJoypadMotion.new()
 		input.axis = JOY_AXIS_TRIGGER_RIGHT
 		input.axis_value = 1.0
-		input.device = num - 1
-		InputMap.action_add_event("controller_" + str(num) + "_right_trigger", input)
-		InputMap.action_add_event("controller_" + str(num) + "_join_alt", input)
-	# right trigger Nintendo
-	if false:#true:
-		var input = InputEventJoypadButton.new()
-		#input.button_index = WHATEVER_NINTENDO_IS
 		input.device = num - 1
 		InputMap.action_add_event("controller_" + str(num) + "_right_trigger", input)
 		InputMap.action_add_event("controller_" + str(num) + "_join_alt", input)
