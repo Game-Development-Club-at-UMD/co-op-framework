@@ -55,7 +55,7 @@ func _ready() -> void:
 	grid_container.add_theme_constant_override("v_separation", splitscreen_line_thickness)
 	start_player_select()
 
-## Modifies the number of viewports on screen to match the number of players.
+## Modifies the number of viewports on screen to match the number of players. Also updates properties such as splitscreen, etc.
 func update_player_view_count() -> void:
 	# if you aren't playing in splitscreen, disable the rest of the viewports and doesn't do anything else
 	if !splitscreen:

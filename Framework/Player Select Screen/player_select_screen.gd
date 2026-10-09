@@ -48,11 +48,16 @@ var framework_control: Node
 	player_input_card_4
 ]
 
+@onready var player_cursor_1: CharacterBody2D = $"CanvasLayer/Player Cursor 1"
+@onready var player_cursor_2: CharacterBody2D = $"CanvasLayer/Player Cursor 2"
+@onready var player_cursor_3: CharacterBody2D = $"CanvasLayer/Player Cursor 3"
+@onready var player_cursor_4: CharacterBody2D = $"CanvasLayer/Player Cursor 4"
+
 @onready var player_cursors: Array[CharacterBody2D] = [
-	$"CanvasLayer/Player Cursor 1",
-	$"CanvasLayer/Player Cursor 2",
-	$"CanvasLayer/Player Cursor 3",
-	$"CanvasLayer/Player Cursor 4",
+	player_cursor_1,
+	player_cursor_2,
+	player_cursor_3,
+	player_cursor_4
 ]
 
 @onready var start_game_button = $"CanvasLayer/Control/Control 2/Start Game"
@@ -99,11 +104,11 @@ func _process(_delta: float) -> void:
 			add_new_player("keyboard_wasd")
 		if Input.is_action_just_pressed("keyboard_arrow_keys_join"):
 			add_new_player("keyboard_arrow_keys")
-		if (Input.is_action_just_pressed("controller_1_join") or Input.is_action_just_pressed("controller_1_up") or Input.is_action_just_pressed("controller_1_down") or Input.is_action_just_pressed("controller_1_left") or Input.is_action_just_pressed("controller_1_right")):
+		if (Input.is_action_just_pressed("controller_1_join") or Input.is_action_just_pressed("controller_1_join_alt")):
 			add_new_player("controller_1")
-		if (Input.is_action_just_pressed("controller_2_join") or Input.is_action_just_pressed("controller_2_up") or Input.is_action_just_pressed("controller_2_down") or Input.is_action_just_pressed("controller_2_left") or Input.is_action_just_pressed("controller_2_right")):
+		if (Input.is_action_just_pressed("controller_2_join") or Input.is_action_just_pressed("controller_2_join_alt")):
 			add_new_player("controller_2")
-		if (Input.is_action_just_pressed("controller_3_join") or Input.is_action_just_pressed("controller_3_up") or Input.is_action_just_pressed("controller_3_down") or Input.is_action_just_pressed("controller_3_left") or Input.is_action_just_pressed("controller_3_right")):
+		if (Input.is_action_just_pressed("controller_3_join") or Input.is_action_just_pressed("controller_3_join_alt")):
 			add_new_player("controller_3")
 		if (Input.is_action_just_pressed("controller_4_join") or Input.is_action_just_pressed("controller_4_join_alt")):
 			add_new_player("controller_4")
@@ -127,7 +132,7 @@ func add_new_player(control_name: String) -> void:
 	player_input_cards[player_num - 1].connect_control_type(control_name)
 	currently_used_controls[player_num - 1] = control_name
 	player_count += 1
-	CoopInput.get_player(player_num).assign_inputs(control_name)
+	CoopInput.get_player(player_num)._assign_inputs(control_name)
 	
 	# activates corresponding cursor
 	player_cursors[player_num - 1].activate(player_input_cards[player_num - 1].global_position)

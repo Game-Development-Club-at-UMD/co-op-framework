@@ -43,7 +43,7 @@ class_name PlayerInput extends Node
 @onready var RIGHT_TRIGGER: String = ""
 
 ## Current assigned input name.
-var current_control_name: String = ""
+var _current_control_name: String = ""
 
 const ACCEPTED_INPUT_NAMES: Array[String] = [
 	"keyboard_wasd",
@@ -54,10 +54,10 @@ const ACCEPTED_INPUT_NAMES: Array[String] = [
 	"controller_4"
 ]
 
-## Run when a new player joins, and inputs must be assigned for their control type.
-func assign_inputs(input_type: String) -> void:
+## YOU SHOULD NEVER USE THIS. Run when a new player joins, and inputs must be assigned for their control type.
+func _assign_inputs(input_type: String) -> void:
 	if ACCEPTED_INPUT_NAMES.has(input_type):
-		current_control_name = input_type
+		_current_control_name = input_type
 		UP = input_type + "_up"
 		DOWN = input_type + "_down"
 		LEFT = input_type + "_left"
